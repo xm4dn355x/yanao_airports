@@ -1,0 +1,16 @@
+Салехардский аэропорт:
+https://www.flightradar24.com/data/airports/sly
+
+Аэропорт Ноябрьск:
+https://www.flightradar24.com/data/airports/noj
+
+Аэропорт Новый Уренгой:
+https://www.flightradar24.com/data/airports/nux
+
+Аэропорт Надым:
+https://www.flightradar24.com/data/airports/nym
+
+Аэропорт Сабетта:
+https://www.flightradar24.com/data/airports/sbt
+http://sabetta.aero/#sortie - departures
+http://sabetta.aero/#arrive - arrivals
