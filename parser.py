@@ -23,6 +23,11 @@ SBT_DEP_URL = 'http://sabetta.aero/#sortie'
 def parse_all():
     pass
 
+def get_html(url):
+    r = requests.get(url, headers={'User-Agent': 'Custom'})
+    print(r)
+    return r.text
+
 def parse_sly():
     pass
 
