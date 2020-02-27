@@ -9,9 +9,14 @@ This module contains parsers for airports scoreboards
 
 
 from bs4 import BeautifulSoup
+from datetime import datetime
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import requests
 
-
+PATH_WEBDRIVER = 'D:\Python\yanao_airports\webdrivers\chromedriver_win32_80\chromedriver.exe'
 SLY_URL = 'https://www.flightradar24.com/data/airports/sly'
 NOJ_URL = 'https://www.flightradar24.com/data/airports/noj'
 NUX_URL = 'https://www.flightradar24.com/data/airports/nux'
@@ -29,20 +34,43 @@ def get_html(url):
     return r.text
 
 def parse_sly():
-    pass
+    print('parse_sly')
 
 def parse_noj():
-    pass
+    print('parse_noj')
 
 def parse_nux():
-    pass
+    print('parse_nux')
 
 def parse_nym():
-    pass
+    print('parse_nym')
 
 def parse_sbt():
-    pass
+    print('parse_sbt')
+    arr_html = get_html(SBT_ARR_URL)
+    dep_html = get_html(SBT_DEP_URL)
+    arr_data = sbt_get_data(arr_html, 'arrive')
+    dep_data = sbt_get_data(dep_html, 'sortie')
+    data = [arr_data, dep_data]
+    return data
 
+def sbt_get_data(html, type):
+    soup = BeautifulSoup(html, 'lxml')
+    table = soup.find('div', id=type)
+    table = table.find('tbody')
+    rows = table.find_all('tr')
+    data = []
+    for row in rows:
+        tds = row.find_all('td')
+        flight = tds[0].find('a').text
+        airport = tds[1].text.strip()
+        plane = tds[2].text.strip()
+        plan_time = tds[3].text.strip()
+        fact_time = tds[4].text.strip()
+        status = tds[5].find('span').text.strip()
+        row_data = {'flight': flight, 'airport': airport, 'plane': plane, 'plan_time': plan_time, 'fact_time': fact_time, 'status': status}
+        data.append(row_data)
+    return data
 
 if __name__ == '__main__':
-    pass
+    data = parse_sbt()
