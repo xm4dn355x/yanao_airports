@@ -28,11 +28,6 @@ SBT_DEP_URL = 'http://sabetta.aero/#sortie'
 def parse_all():
     pass
 
-def get_html(url):
-    r = requests.get(url, headers={'User-Agent': 'Custom'})
-    print(r)
-    return r.text
-
 def parse_sly():
     print('parse_sly')
 
@@ -53,6 +48,11 @@ def parse_sbt():
     dep_data = sbt_get_data(dep_html, 'sortie')
     data = [arr_data, dep_data]
     return data
+
+def get_html(url):
+    r = requests.get(url, headers={'User-Agent': 'Custom'})
+    print(r)
+    return r.text
 
 def sbt_get_data(html, type):
     soup = BeautifulSoup(html, 'lxml')
