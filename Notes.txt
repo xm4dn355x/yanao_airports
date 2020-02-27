@@ -1,14 +1,22 @@
 Салехардский аэропорт:
 https://www.flightradar24.com/data/airports/sly
+https://rasp.yandex.ru/station/9623576/?event=departure
+https://rasp.yandex.ru/station/9623576/?event=arrival
 
 Аэропорт Ноябрьск:
 https://www.flightradar24.com/data/airports/noj
+https://rasp.yandex.ru/station/9623575/?event=departure
+https://rasp.yandex.ru/station/9623575/?event=arrival
 
 Аэропорт Новый Уренгой:
 https://www.flightradar24.com/data/airports/nux
+https://rasp.yandex.ru/station/9623560/?event=departure
+https://rasp.yandex.ru/station/9623560/?event=arrival
 
 Аэропорт Надым:
 https://www.flightradar24.com/data/airports/nym
+https://rasp.yandex.ru/station/9623567/?event=departure
+https://rasp.yandex.ru/station/9623567/?event=arrival
 
 Аэропорт Сабетта:
 https://www.flightradar24.com/data/airports/sbt
