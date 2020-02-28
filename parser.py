@@ -18,6 +18,8 @@ import requests
 
 PATH_WEBDRIVER = 'D:\Python\yanao_airports\webdrivers\chromedriver_win32_80\chromedriver.exe'
 SLY_URL = 'https://www.flightradar24.com/data/airports/sly'
+SLY_ARR_URL = 'https://rasp.yandex.ru/station/9623576/?event=arrival'
+SLY_DEP_URL = 'https://rasp.yandex.ru/station/9623576/?event=departure'
 NOJ_URL = 'https://www.flightradar24.com/data/airports/noj'
 NUX_URL = 'https://www.flightradar24.com/data/airports/nux'
 NYM_URL = 'https://www.flightradar24.com/data/airports/nym'
@@ -30,6 +32,10 @@ def parse_all():
 
 def parse_sly():
     print('parse_sly')
+    arr_html = get_html(SLY_ARR_URL)
+    dep_html = get_html(SLY_DEP_URL)
+    print(arr_html)
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
 def parse_noj():
     print('parse_noj')
@@ -51,6 +57,7 @@ def parse_sbt():
 
 def get_html(url):
     r = requests.get(url, headers={'User-Agent': 'Custom'})
+    r.encoding = r.apparent_encoding
     print(r)
     return r.text
 
@@ -74,3 +81,4 @@ def sbt_get_data(html, type):
 
 if __name__ == '__main__':
     data = parse_sbt()
+    print(data)
