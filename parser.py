@@ -10,10 +10,10 @@ This module contains parsers for airports scoreboards
 
 from bs4 import BeautifulSoup
 from datetime import datetime
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
 import requests
 
 PATH_WEBDRIVER = 'D:\Python\yanao_airports\webdrivers\chromedriver_win32_80\chromedriver.exe'
@@ -75,7 +75,8 @@ def sbt_get_data(html, type):
         plan_time = tds[3].text.strip()
         fact_time = tds[4].text.strip()
         status = tds[5].find('span').text.strip()
-        row_data = {'flight': flight, 'airport': airport, 'plane': plane, 'plan_time': plan_time, 'fact_time': fact_time, 'status': status}
+        row_data = {'flight': flight, 'airport': airport, 'plane': plane, 'plan_time': plan_time,
+                    'fact_time': fact_time, 'status': status}
         data.append(row_data)
     return data
 
