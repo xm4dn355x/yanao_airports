@@ -1,0 +1,18 @@
+body { 
+ font-family: monospace ;
+}
+
+.main__content {
+    background-color: #EDEEF0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.table__airport {
+    margin-top: 25px;
+}
+
+.title__info {
+ text-align: center;
+}
