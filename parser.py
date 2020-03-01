@@ -30,6 +30,7 @@ SBT_DEP_URL = 'http://sabetta.aero/#sortie'
 def parse_all():
     pass
 
+
 def parse_sly():
     print('parse_sly')
     arr_html = get_html(SLY_ARR_URL)
@@ -37,14 +38,18 @@ def parse_sly():
     print(arr_html)
     print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
+
 def parse_noj():
     print('parse_noj')
+
 
 def parse_nux():
     print('parse_nux')
 
+
 def parse_nym():
     print('parse_nym')
+
 
 def parse_sbt():
     print('parse_sbt')
@@ -55,11 +60,13 @@ def parse_sbt():
     data = [arr_data, dep_data]
     return data
 
+
 def get_html(url):
     r = requests.get(url, headers={'User-Agent': 'Custom'})
     r.encoding = r.apparent_encoding
     print(r)
     return r.text
+
 
 def sbt_get_data(html, type):
     soup = BeautifulSoup(html, 'lxml')
@@ -79,6 +86,7 @@ def sbt_get_data(html, type):
                     'fact_time': fact_time, 'status': status}
         data.append(row_data)
     return data
+
 
 if __name__ == '__main__':
     data = parse_sbt()
