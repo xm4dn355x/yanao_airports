@@ -20,6 +20,7 @@ PATH_WEBDRIVER = 'D:\Python\yanao_airports\webdrivers\chromedriver_win32_80\chro
 SLY_URL = 'https://www.flightradar24.com/data/airports/sly'
 SLY_ARR_URL = 'https://rasp.yandex.ru/station/9623576/?event=arrival'
 SLY_DEP_URL = 'https://rasp.yandex.ru/station/9623576/?event=departure'
+SLY_JSON_REQ = 'http://airshd.ru/ajax/timetable.json'
 NOJ_URL = 'https://www.flightradar24.com/data/airports/noj'
 NUX_URL = 'https://www.flightradar24.com/data/airports/nux'
 NYM_URL = 'https://www.flightradar24.com/data/airports/nym'
