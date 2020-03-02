@@ -19,15 +19,23 @@ import requests
 
 PATH_WEBDRIVER = 'D:\Python\yanao_airports\webdrivers\chromedriver_win32_80\chromedriver.exe'
 SLY_URL = 'http://airshd.ru/ajax/timetable.json'
-NOJ_URL = 'https://api.flightradar24.com/common/v1/airport.json?code=noj&plugin[]=&plugin-setting[schedule][mode]=&plugin-setting[schedule][timestamp]=1583128067&page=1&limit=100&fleet=&token='
-NUX_URL = 'https://www.flightradar24.com/data/airports/nux'
-NYM_URL = 'https://www.flightradar24.com/data/airports/nym'
+NOJ_URL = 'https://api.flightradar24.com/common/v1/airport.json?code=noj&plugin[]=&plugin-setting[schedule][mode]=&' \
+          'plugin-setting[schedule][timestamp]=1583128067&page=1&limit=100&fleet=&token='
+NUX_URL = 'https://api.flightradar24.com/common/v1/airport.json?code=nux&plugin[]=&plugin-setting[schedule][mode]=&' \
+          'plugin-setting[schedule][timestamp]=1583141149&page=1&limit=100&fleet=&token='
+NYM_URL = 'https://api.flightradar24.com/common/v1/airport.json?code=nym&plugin[]=&plugin-setting[schedule][mode]=&plugin-setting[schedule][timestamp]=1583141149&page=1&limit=100&fleet=&token='
 SBT_URL = 'https://www.flightradar24.com/data/airports/sbt'
 SBT_ARR_URL = 'http://sabetta.aero/#arrive'
 SBT_DEP_URL = 'http://sabetta.aero/#sortie'
 
 def parse_all():
-    pass
+    sly_data = parse_sly()
+    noy_data = parse_noj()
+    nux_data = parse_nux()
+    nym_data = parse_nym()
+    sbt_data = parse_sbt()
+    parsed_data = [sly_data, noy_data, nux_data, nym_data, sbt_data]
+    return parsed_data
 
 
 def get_html(url):
@@ -65,25 +73,44 @@ def get_sly_parsed_data(raw_data, type):
 
 def parse_noj():
     print('parse_noj')
-    json_data = get_json(NOJ_URL)
-    json_data = json_data.get('result').get('response').get('airport').get('pluginData').get('schedule')
+    json_data = get_json(NOJ_URL).get('result').get('response').get('airport').get('pluginData').get('schedule')
     arr_data = get_flyradar_json_data(json_data, 'arrivals')
     dep_data = get_flyradar_json_data(json_data, 'departures')
     data = [arr_data, dep_data]
     return data
+
+
+def parse_nux():
+    print('parse_nux')
+    json_data = get_json(NUX_URL).get('result').get('response').get('airport').get('pluginData').get('schedule')
+    arr_data = get_flyradar_json_data(json_data, 'arrivals')
+    dep_data = get_flyradar_json_data(json_data, 'departures')
+    data = [arr_data, dep_data]
+    return data
+
+
+def parse_nym():
+    print('parse_nym')
+    json_data = get_json(NYM_URL).get('result').get('response').get('airport').get('pluginData').get('schedule')
+    arr_data = get_flyradar_json_data(json_data, 'arrivals')
+    dep_data = get_flyradar_json_data(json_data, 'departures')
+    data = [arr_data, dep_data]
+    return data
+
 
 def get_flyradar_json_data(json_data, type):
     rows = json_data.get(type).get('data')
     if type == 'arrivals':
         airport_type = 'origin'
         time_type = 'arrival'
-    else:
+    elif type == 'departures':
         airport_type = 'destination'
         time_type = 'departure'
+    else:
+        return None
     data = []
     for row in rows:
         row = row.get('flight')
-        print(row)
         flight = row.get('identification').get('number').get('default')
         airport = row.get('airport').get(airport_type).get('name')
         plane = row.get('aircraft').get('model').get('code')
@@ -97,14 +124,6 @@ def get_flyradar_json_data(json_data, type):
                     'plan_time': plan_time, 'fact_time': fact_time, 'status': status}
         data.append(row_data)
     return data
-
-
-def parse_nux():
-    print('parse_nux')
-
-
-def parse_nym():
-    print('parse_nym')
 
 
 def parse_sbt():
@@ -138,4 +157,4 @@ def sbt_get_data(html, type):
 
 
 if __name__ == '__main__':
-    parse_noj()
+    print('parser')
