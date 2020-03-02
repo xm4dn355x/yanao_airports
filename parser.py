@@ -26,13 +26,7 @@ SBT_DEP_URL = 'http://sabetta.aero/#sortie'
 
 
 def parse_all():
-    sly_data = parse_sly()
-    noy_data = parse_noj()
-    nux_data = parse_nux()
-    nym_data = parse_nym()
-    sbt_data = parse_sbt()
-    parsed_data = [sly_data, noy_data, nux_data, nym_data, sbt_data]
-    return parsed_data
+    return [parse_sly(), parse_noj(), parse_nux(), parse_nym(), parse_sbt()]
 
 
 def get_html(url):
@@ -155,3 +149,5 @@ def sbt_get_data(html, type):
 
 if __name__ == '__main__':
     print('parser')
+    data = parse_all()
+    print(data)
