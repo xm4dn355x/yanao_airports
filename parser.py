@@ -10,23 +10,20 @@ This module contains parsers for airports scoreboards
 
 from bs4 import BeautifulSoup
 from datetime import datetime
-# from selenium import webdriver
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.support import expected_conditions as EC
 import json
 import requests
 
-PATH_WEBDRIVER = 'D:\Python\yanao_airports\webdrivers\chromedriver_win32_80\chromedriver.exe'
+
 SLY_URL = 'http://airshd.ru/ajax/timetable.json'
 NOJ_URL = 'https://api.flightradar24.com/common/v1/airport.json?code=noj&plugin[]=&plugin-setting[schedule][mode]=&' \
           'plugin-setting[schedule][timestamp]=1583128067&page=1&limit=100&fleet=&token='
 NUX_URL = 'https://api.flightradar24.com/common/v1/airport.json?code=nux&plugin[]=&plugin-setting[schedule][mode]=&' \
           'plugin-setting[schedule][timestamp]=1583141149&page=1&limit=100&fleet=&token='
-NYM_URL = 'https://api.flightradar24.com/common/v1/airport.json?code=nym&plugin[]=&plugin-setting[schedule][mode]=&plugin-setting[schedule][timestamp]=1583141149&page=1&limit=100&fleet=&token='
-SBT_URL = 'https://www.flightradar24.com/data/airports/sbt'
+NYM_URL = 'https://api.flightradar24.com/common/v1/airport.json?code=nym&plugin[]=&plugin-setting[schedule][mode]=&' \
+          'plugin-setting[schedule][timestamp]=1583141149&page=1&limit=100&fleet=&token='
 SBT_ARR_URL = 'http://sabetta.aero/#arrive'
 SBT_DEP_URL = 'http://sabetta.aero/#sortie'
+
 
 def parse_all():
     sly_data = parse_sly()
