@@ -6,6 +6,7 @@ http://airshd.ru/ajax/timetable.json
 
 Аэропорт Ноябрьск:
 https://www.flightradar24.com/data/airports/noj
+https://www.flightradar24.com/airports/traffic-stats/?airport=noj
 https://rasp.yandex.ru/station/9623575/?event=departure
 https://rasp.yandex.ru/station/9623575/?event=arrival
 

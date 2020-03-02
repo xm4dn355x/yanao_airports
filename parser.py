@@ -19,7 +19,7 @@ import requests
 
 PATH_WEBDRIVER = 'D:\Python\yanao_airports\webdrivers\chromedriver_win32_80\chromedriver.exe'
 SLY_URL = 'http://airshd.ru/ajax/timetable.json'
-NOJ_URL = 'https://www.flightradar24.com/data/airports/noj'
+NOJ_URL = 'https://www.flightradar24.com/airports/traffic-stats/?airport=noj'
 NUX_URL = 'https://www.flightradar24.com/data/airports/nux'
 NYM_URL = 'https://www.flightradar24.com/data/airports/nym'
 SBT_URL = 'https://www.flightradar24.com/data/airports/sbt'
@@ -37,10 +37,15 @@ def get_html(url):
     return r.text
 
 
+def get_json(url):
+    r = requests.get(url, headers={'User-Agent': 'Custom'})
+    json_data = json.loads(r.text)
+    return json_data
+
+
 def parse_sly():
     print('parse_sly')
-    r = requests.get(SLY_URL, headers={'User-Agent': 'Custom'})
-    json_data = json.loads(r.text)
+    json_data = get_json(SLY_URL)
     data = json_data.get('data')
     arr_data = get_sly_parsed_data(data, 'ARRIVAL')
     dep_data = get_sly_parsed_data(data, 'DEPARTURE')
@@ -101,4 +106,4 @@ def sbt_get_data(html, type):
 
 
 if __name__ == '__main__':
-    data = parse_sly()
+    print(parse_sly())
