@@ -19,7 +19,7 @@ import requests
 
 PATH_WEBDRIVER = 'D:\Python\yanao_airports\webdrivers\chromedriver_win32_80\chromedriver.exe'
 SLY_URL = 'http://airshd.ru/ajax/timetable.json'
-NOJ_URL = 'https://www.flightradar24.com/airports/traffic-stats/?airport=noj'
+NOJ_URL = 'https://api.flightradar24.com/common/v1/airport.json?code=noj&plugin[]=&plugin-setting[schedule][mode]=&plugin-setting[schedule][timestamp]=1583128067&page=1&limit=100&fleet=&token='
 NUX_URL = 'https://www.flightradar24.com/data/airports/nux'
 NYM_URL = 'https://www.flightradar24.com/data/airports/nym'
 SBT_URL = 'https://www.flightradar24.com/data/airports/sbt'
@@ -65,6 +65,38 @@ def get_sly_parsed_data(raw_data, type):
 
 def parse_noj():
     print('parse_noj')
+    json_data = get_json(NOJ_URL)
+    json_data = json_data.get('result').get('response').get('airport').get('pluginData').get('schedule')
+    arr_data = get_flyradar_json_data(json_data, 'arrivals')
+    dep_data = get_flyradar_json_data(json_data, 'departures')
+    data = [arr_data, dep_data]
+    return data
+
+def get_flyradar_json_data(json_data, type):
+    rows = json_data.get(type).get('data')
+    if type == 'arrivals':
+        airport_type = 'origin'
+        time_type = 'arrival'
+    else:
+        airport_type = 'destination'
+        time_type = 'departure'
+    data = []
+    for row in rows:
+        row = row.get('flight')
+        print(row)
+        flight = row.get('identification').get('number').get('default')
+        airport = row.get('airport').get(airport_type).get('name')
+        plane = row.get('aircraft').get('model').get('code')
+        plan_time = datetime.fromtimestamp(row.get('time').get('scheduled').get(time_type))
+        try:
+            fact_time = datetime.fromtimestamp(row.get('time').get('estimated').get(time_type))
+        except:
+            fact_time = ''
+        status = row.get('status').get('text')
+        row_data = {'flight': flight, 'airport': airport, 'plane': plane,
+                    'plan_time': plan_time, 'fact_time': fact_time, 'status': status}
+        data.append(row_data)
+    return data
 
 
 def parse_nux():
@@ -106,4 +138,4 @@ def sbt_get_data(html, type):
 
 
 if __name__ == '__main__':
-    print(parse_sly())
+    parse_noj()
