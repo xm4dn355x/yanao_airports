@@ -2,6 +2,7 @@
 https://www.flightradar24.com/data/airports/sly
 https://rasp.yandex.ru/station/9623576/?event=departure
 https://rasp.yandex.ru/station/9623576/?event=arrival
+http://airshd.ru/ajax/timetable.json
 
 Аэропорт Ноябрьск:
 https://www.flightradar24.com/data/airports/noj

@@ -14,13 +14,11 @@ from datetime import datetime
 # from selenium.webdriver.common.by import By
 # from selenium.webdriver.support.ui import WebDriverWait
 # from selenium.webdriver.support import expected_conditions as EC
+import json
 import requests
 
 PATH_WEBDRIVER = 'D:\Python\yanao_airports\webdrivers\chromedriver_win32_80\chromedriver.exe'
-SLY_URL = 'https://www.flightradar24.com/data/airports/sly'
-SLY_ARR_URL = 'https://rasp.yandex.ru/station/9623576/?event=arrival'
-SLY_DEP_URL = 'https://rasp.yandex.ru/station/9623576/?event=departure'
-SLY_JSON_REQ = 'http://airshd.ru/ajax/timetable.json'
+SLY_URL = 'http://airshd.ru/ajax/timetable.json'
 NOJ_URL = 'https://www.flightradar24.com/data/airports/noj'
 NUX_URL = 'https://www.flightradar24.com/data/airports/nux'
 NYM_URL = 'https://www.flightradar24.com/data/airports/nym'
@@ -32,12 +30,32 @@ def parse_all():
     pass
 
 
+def get_html(url):
+    r = requests.get(url, headers={'User-Agent': 'Custom'})
+    r.encoding = r.apparent_encoding
+    print(r)
+    return r.text
+
+
 def parse_sly():
     print('parse_sly')
-    arr_html = get_html(SLY_ARR_URL)
-    dep_html = get_html(SLY_DEP_URL)
-    print(arr_html)
-    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    r = requests.get(SLY_URL, headers={'User-Agent': 'Custom'})
+    json_data = json.loads(r.text)
+    data = json_data.get('data')
+    arr_data = get_sly_parsed_data(data, 'ARRIVAL')
+    dep_data = get_sly_parsed_data(data, 'DEPARTURE')
+    data = [arr_data, dep_data]
+    return data
+
+
+def get_sly_parsed_data(raw_data, type):
+    rows = raw_data.get(type)
+    data = []
+    for row in rows:
+        row_data = {'flight': row['flight'], 'airport': row['airport'], 'plane': row['aircraft'],
+                    'plan_time': row['plan'], 'fact_time': row['fact'], 'status': row['status']}
+        data.append(row_data)
+    return data
 
 
 def parse_noj():
@@ -62,13 +80,6 @@ def parse_sbt():
     return data
 
 
-def get_html(url):
-    r = requests.get(url, headers={'User-Agent': 'Custom'})
-    r.encoding = r.apparent_encoding
-    print(r)
-    return r.text
-
-
 def sbt_get_data(html, type):
     soup = BeautifulSoup(html, 'lxml')
     table = soup.find('div', id=type)
@@ -90,5 +101,4 @@ def sbt_get_data(html, type):
 
 
 if __name__ == '__main__':
-    data = parse_sbt()
-    print(data)
+    data = parse_sly()
