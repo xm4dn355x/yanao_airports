@@ -1,9 +1,9 @@
 body { 
- font-family: monospace ;
+    font-family: monospace ;
+    background-color: #EDEEF0;
 }
 
 .main__content {
-    background-color: #EDEEF0;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -14,5 +14,9 @@ body {
 }
 
 .title__info {
- text-align: center;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
 }
