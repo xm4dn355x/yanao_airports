@@ -16,6 +16,8 @@ https://www.flightradar24.com/data/airports/nux
 https://api.flightradar24.com/common/v1/airport.json?code=nux&plugin[]=&plugin-setting[schedule][mode]=&plugin-setting[schedule][timestamp]=1583141149&page=1&limit=100&fleet=&token=
 https://rasp.yandex.ru/station/9623560/?event=departure
 https://rasp.yandex.ru/station/9623560/?event=arrival
+http://nux.aero/board/?type=arr&ready=yes
+http://nux.aero/board/?ready=yes
 
 Аэропорт Надым:
 https://www.flightradar24.com/data/airports/nym
