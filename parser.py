@@ -32,6 +32,12 @@ def parse_all():
 
 
 def get_html(url):
+    """
+    Get HTML document from GET request from URL
+
+    :param url: str URL of request
+    :return: str HTML document
+    """
     r = requests.get(url, headers={'User-Agent': 'Custom'})
     r.encoding = r.apparent_encoding
     print(r)
@@ -39,6 +45,12 @@ def get_html(url):
 
 
 def get_json(url):
+    """
+    Get JSON document from GET request from URL
+
+    :param url:
+    :return: dict JSON data
+    """
     global TIMESTAMP
     TIMESTAMP = time()
     r = requests.get(url, headers={'User-Agent': 'Custom'})
@@ -47,6 +59,11 @@ def get_json(url):
 
 
 def parse_sly():
+    """
+    Parsing Salekhard (SLY) airport arrivals and departure data
+
+    :return: list [list of dicts arrivals, list of dicts departures]
+    """
     print('parse_sly')
     json_data = get_json(SLY_URL)
     data = json_data.get('data')
@@ -57,6 +74,13 @@ def parse_sly():
 
 
 def get_sly_parsed_data(raw_data, type):
+    """
+    Recieve raw JSON data and return list of dicts with flights data
+
+    :param raw_data: dict JSON data
+    :param type: str 'ARRIVAL' or 'DEPARTURE'
+    :return: list of dicts with parsed data
+    """
     rows = raw_data.get(type)
     data = []
     for row in rows:
@@ -67,6 +91,11 @@ def get_sly_parsed_data(raw_data, type):
 
 
 def parse_noj():
+    """
+    Parsing Nojabrsk (NOJ) airport arrivals and departure data
+
+    :return: list [list of dicts arrivals, list of dicts departures]
+    """
     print('parse_noj')
     json_data = get_json(NOJ_URL).get('result').get('response').get('airport').get('pluginData').get('schedule')
     arr_data = get_flyradar_json_data(json_data, 'arrivals')
@@ -76,6 +105,11 @@ def parse_noj():
 
 
 def parse_nux():
+    """
+    Parsing Noviy Urengoy (NUX) airport arrivals and departure data
+
+    :return: list [list of dicts arrivals, list of dicts departures]
+    """
     print('parse_nux')
     arr_html = get_html(NUX_ARR_URL)
     dep_html = get_html(NUX_DEP_URL)
@@ -86,6 +120,12 @@ def parse_nux():
 
 
 def nux_get_data(html):
+    """
+    Recieve HTML document and return parsed data from this HTML
+
+    :param html: str HTML document
+    :return: list of dicts with parsed data
+    """
     soup = BeautifulSoup(html, 'lxml')
     rows = soup.find('div', 'table-flex-wrap').find('div', 'table-flex__body').find_all('a')
     data = []
@@ -110,6 +150,11 @@ def nux_get_data(html):
 
 
 def parse_nym():
+    """
+    Parsing Nadym (NYM) airport arrivals and departure data
+
+    :return: list [list of dicts arrivals, list of dicts departures]
+    """
     print('parse_nym')
     json_data = get_json(NYM_URL).get('result').get('response').get('airport').get('pluginData').get('schedule')
     arr_data = get_flyradar_json_data(json_data, 'arrivals')
@@ -119,6 +164,13 @@ def parse_nym():
 
 
 def get_flyradar_json_data(json_data, type):
+    """
+    Recieve JSON from flightradar24 'arrivals' or 'departure', parsing JSON and return list of dicts with parsed data
+
+    :param json_data: dict JSON
+    :param type: str 'arrivals' or 'departures'
+    :return: list of dicts with parsed data
+    """
     rows = json_data.get(type).get('data')
     if type == 'arrivals':
         airport_type = 'origin'
@@ -147,6 +199,11 @@ def get_flyradar_json_data(json_data, type):
 
 
 def parse_sbt():
+    """
+    Parsing Sabetta (SBT) airport arrivals and departure data
+
+    :return: list [list of dicts arrivals, list of dicts departures]
+    """
     print('parse_sbt')
     arr_html = get_html(SBT_ARR_URL)
     dep_html = get_html(SBT_DEP_URL)
@@ -157,6 +214,13 @@ def parse_sbt():
 
 
 def sbt_get_data(html, type):
+    """
+    Recieve HTML document and str 'arrive' or 'sortie', parse HTML and return list of dicts with parsed data
+
+    :param html: str HTML document
+    :param type: str 'arrive' or 'sortie'
+    :return:
+    """
     soup = BeautifulSoup(html, 'lxml')
     table = soup.find('div', id=type)
     table = table.find('tbody')
@@ -177,6 +241,11 @@ def sbt_get_data(html, type):
 
 
 def convert_timestamp_to_strftime(time_var):
+    """
+    Revieve timestamp and return str with Humanized time data
+    :param time_var: int timestamp
+    :return: str "Hours:Minutes day.month"
+    """
     return strftime("%H:%M %d.%m", gmtime(time_var))
 
 
