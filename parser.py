@@ -10,6 +10,7 @@ This module contains parsers for airports scoreboards
 
 from bs4 import BeautifulSoup
 from time import time, strftime, gmtime
+from translate_flyradar import translate
 import json
 import requests
 
@@ -85,7 +86,7 @@ def get_sly_parsed_data(raw_data, type):
     data = []
     for row in rows:
         row_data = {'flight': row['flight'], 'airport': row['airport'], 'plane': row['aircraft'],
-                    'plan_time': row['plan'], 'fact_time': row['fact'], 'status': row['status']}
+                    'plan_time': row['plan'], 'fact_time': row['fact'], 'status': row['status'].upper()}
         data.append(row_data)
     return data
 
@@ -141,7 +142,7 @@ def nux_get_data(html):
                     f"{row.find('div', 'table-flex__td table-flex__td--type1').find('span', 'board__text-extra').text}"
         fact_time = f"{row.find('div', 'table-flex__td table-flex__td--type6').find('span', 'board__text').text} " \
                     f"{row.find('div', 'table-flex__td table-flex__td--type6').find('span', 'board__text-extra').text}"
-        status = row.find('div', 'table-flex__td table-flex__td--type5').find('span').text
+        status = row.find('div', 'table-flex__td table-flex__td--type5').find('span').text.upper()
         row_data = {'flight': flight, 'airport': airport, 'plane': plane, 'plan_time': plan_time,
                     'fact_time': fact_time, 'status': status}
         data.append(row_data)
@@ -191,7 +192,7 @@ def get_flyradar_json_data(json_data, type):
             fact_time = convert_timestamp_to_strftime(row.get('time').get('estimated').get(time_type))
         except:
             fact_time = ''
-        status = row.get('status').get('text')
+        status = translate(row.get('status').get('text'), 'status')
         row_data = {'flight': flight, 'airport': airport, 'plane': plane,
                     'plan_time': plan_time, 'fact_time': fact_time, 'status': status}
         data.append(row_data)
@@ -233,7 +234,7 @@ def sbt_get_data(html, type):
         plane = tds[2].text.strip()
         plan_time = tds[3].text.strip()
         fact_time = tds[4].text.strip()
-        status = tds[5].find('span').text.strip()
+        status = tds[5].find('span').text.strip().upper()
         row_data = {'flight': flight, 'airport': airport, 'plane': plane, 'plan_time': plan_time,
                     'fact_time': fact_time, 'status': status}
         data.append(row_data)
