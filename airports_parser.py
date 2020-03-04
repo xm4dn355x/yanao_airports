@@ -85,7 +85,7 @@ def get_sly_parsed_data(raw_data, type):
     rows = raw_data.get(type)
     data = []
     for row in rows:
-        row_data = {'flight': row['flight'], 'airport': row['airport'], 'plane': row['aircraft'],
+        row_data = {'flight': row['flight'], 'airport': row['airport'].strip(), 'plane': row['aircraft'].strip(),
                     'plan_time': row['plan'], 'fact_time': row['fact'], 'status': row['status'].upper()}
         data.append(row_data)
     return data
@@ -139,9 +139,9 @@ def nux_get_data(html):
         except :
             plane = ''
         plan_time = f"{row.find('div', 'table-flex__td table-flex__td--type1').find('span', 'board__text').text} " \
-                    f"{row.find('div', 'table-flex__td table-flex__td--type1').find('span', 'board__text-extra').text}"
+                    f"{row.find('div', 'table-flex__td table-flex__td--type1').find('span', 'board__text-extra').text.strip()}"
         fact_time = f"{row.find('div', 'table-flex__td table-flex__td--type6').find('span', 'board__text').text} " \
-                    f"{row.find('div', 'table-flex__td table-flex__td--type6').find('span', 'board__text-extra').text}"
+                    f"{row.find('div', 'table-flex__td table-flex__td--type6').find('span', 'board__text-extra').text.strip()}"
         status = row.find('div', 'table-flex__td table-flex__td--type5').find('span').text.upper()
         row_data = {'flight': flight, 'airport': airport, 'plane': plane, 'plan_time': plan_time,
                     'fact_time': fact_time, 'status': status}
