@@ -11,6 +11,13 @@ import re
 
 
 def translate(str, type):
+    """
+    Recieve english text and type of field, translate it into russian and return this string
+
+    :param str: str
+    :param type: str  type of field Like: 'status'
+    :return: str translated text
+    """
     res = str
     if type == 'status':
         if re.findall('Scheduled', str):
