@@ -9,8 +9,7 @@ This module contains parsers for airports scoreboards
 
 
 from bs4 import BeautifulSoup
-from datetime import datetime
-from time import time, sleep
+from time import time, strftime, gmtime
 import json
 import requests
 
@@ -135,9 +134,9 @@ def get_flyradar_json_data(json_data, type):
         flight = row.get('identification').get('number').get('default')
         airport = row.get('airport').get(airport_type).get('name')
         plane = row.get('aircraft').get('model').get('code')
-        plan_time = datetime.fromtimestamp(row.get('time').get('scheduled').get(time_type))
+        plan_time = convert_timestamp_to_strftime(row.get('time').get('scheduled').get(time_type))
         try:
-            fact_time = datetime.fromtimestamp(row.get('time').get('estimated').get(time_type))
+            fact_time = convert_timestamp_to_strftime(row.get('time').get('estimated').get(time_type))
         except:
             fact_time = ''
         status = row.get('status').get('text')
@@ -177,5 +176,54 @@ def sbt_get_data(html, type):
     return data
 
 
+def convert_timestamp_to_strftime(time_var):
+    return strftime("%H:%M %d.%m", gmtime(time_var))
+
+
 if __name__ == '__main__':
     print('parser')
+    data = parse_all()
+    print('SLY')
+    print('arrivals')
+    for row in data[0][0]:
+        print(row)
+    print('departure')
+    for row in data[0][1]:
+        print(row)
+    print()
+
+    print('NOJ')
+    print('arrivals')
+    for row in data[1][0]:
+        print(row)
+    print('departure')
+    for row in data[1][1]:
+        print(row)
+    print()
+
+    print('NUX')
+    print('arrivals')
+    for row in data[2][0]:
+        print(row)
+    print('departure')
+    for row in data[2][1]:
+        print(row)
+    print()
+
+    print('NYM')
+    print('arrivals')
+    for row in data[3][0]:
+        print(row)
+    print('departure')
+    for row in data[3][1]:
+        print(row)
+    print()
+
+    print('SBT')
+    print('arrivals')
+    for row in data[4][0]:
+        print(row)
+    print('departure')
+    for row in data[4][1]:
+        print(row)
+    print()
