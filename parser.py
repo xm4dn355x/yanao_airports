@@ -10,17 +10,20 @@ This module contains parsers for airports scoreboards
 
 from bs4 import BeautifulSoup
 from datetime import datetime
+from time import time, sleep
 import json
 import requests
 
-
+TIMESTAMP = time()
 SLY_URL = 'http://airshd.ru/ajax/timetable.json'
-NOJ_URL = 'https://api.flightradar24.com/common/v1/airport.json?code=noj&plugin[]=&plugin-setting[schedule][mode]=&' \
-          'plugin-setting[schedule][timestamp]=1583128067&page=1&limit=100&fleet=&token='
-NUX_URL = 'https://api.flightradar24.com/common/v1/airport.json?code=nux&plugin[]=&plugin-setting[schedule][mode]=&' \
-          'plugin-setting[schedule][timestamp]=1583141149&page=1&limit=100&fleet=&token='
-NYM_URL = 'https://api.flightradar24.com/common/v1/airport.json?code=nym&plugin[]=&plugin-setting[schedule][mode]=&' \
-          'plugin-setting[schedule][timestamp]=1583141149&page=1&limit=100&fleet=&token='
+NOJ_URL = f'https://api.flightradar24.com/common/v1/airport.json?code=noj&plugin[]=&plugin-setting[schedule][mode]=&' \
+          f'plugin-setting[schedule][timestamp]={TIMESTAMP}&page=1&limit=100&fleet=&token='
+NUX_URL = f'https://api.flightradar24.com/common/v1/airport.json?code=nux&plugin[]=&plugin-setting[schedule][mode]=&' \
+          f'plugin-setting[schedule][timestamp]={TIMESTAMP}&page=1&limit=100&fleet=&token='
+NUX_ARR_URL = 'http://nux.aero/board/?type=arr&ready=yes'
+NUX_DEP_URL = 'http://nux.aero/board/?ready=yes'
+NYM_URL = f'https://api.flightradar24.com/common/v1/airport.json?code=nym&plugin[]=&plugin-setting[schedule][mode]=&' \
+          f'plugin-setting[schedule][timestamp]={TIMESTAMP}&page=1&limit=100&fleet=&token='
 SBT_ARR_URL = 'http://sabetta.aero/#arrive'
 SBT_DEP_URL = 'http://sabetta.aero/#sortie'
 
@@ -37,6 +40,8 @@ def get_html(url):
 
 
 def get_json(url):
+    global TIMESTAMP
+    TIMESTAMP = time()
     r = requests.get(url, headers={'User-Agent': 'Custom'})
     json_data = json.loads(r.text)
     return json_data
@@ -73,11 +78,36 @@ def parse_noj():
 
 def parse_nux():
     print('parse_nux')
-    json_data = get_json(NUX_URL).get('result').get('response').get('airport').get('pluginData').get('schedule')
-    arr_data = get_flyradar_json_data(json_data, 'arrivals')
-    dep_data = get_flyradar_json_data(json_data, 'departures')
+    arr_html = get_html(NUX_ARR_URL)
+    dep_html = get_html(NUX_DEP_URL)
+    arr_data = nux_get_data(arr_html)
+    dep_data = nux_get_data(dep_html)
     data = [arr_data, dep_data]
     return data
+
+
+def nux_get_data(html):
+    soup = BeautifulSoup(html, 'lxml')
+    rows = soup.find('div', 'table-flex-wrap').find('div', 'table-flex__body').find_all('a')
+    data = []
+    for row in rows:
+        flight = row.find('div', 'table-flex__td table-flex__td--type2').find('span').text
+        airport = row.find('div', 'table-flex__td table-flex__td--type4').find('span', 'board__text').text
+        try:
+            plane = row.find('div', 'table-flex__td table-flex__td--type3').find('div', 'table-aircompany-logo-alt')\
+                .text
+        except :
+            plane = ''
+        plan_time = f"{row.find('div', 'table-flex__td table-flex__td--type1').find('span', 'board__text').text} " \
+                    f"{row.find('div', 'table-flex__td table-flex__td--type1').find('span', 'board__text-extra').text}"
+        fact_time = f"{row.find('div', 'table-flex__td table-flex__td--type6').find('span', 'board__text').text} " \
+                    f"{row.find('div', 'table-flex__td table-flex__td--type6').find('span', 'board__text-extra').text}"
+        status = row.find('div', 'table-flex__td table-flex__td--type5').find('span').text
+        row_data = {'flight': flight, 'airport': airport, 'plane': plane, 'plan_time': plan_time,
+                    'fact_time': fact_time, 'status': status}
+        data.append(row_data)
+    return data
+
 
 
 def parse_nym():
@@ -149,5 +179,3 @@ def sbt_get_data(html, type):
 
 if __name__ == '__main__':
     print('parser')
-    data = parse_all()
-    print(data)
