@@ -31,3 +31,8 @@ http://sabetta.aero/#arrive - arrivals
 
 Webdrivers:
 http://chromedriver.storage.googleapis.com/index.html
+
+Badges:
+[![Build Status](https://travis-ci.com/username/projectname.svg?branch=master)](https://travis-ci.com/username/projectname)
+Licenses https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
+https://shields.io/
