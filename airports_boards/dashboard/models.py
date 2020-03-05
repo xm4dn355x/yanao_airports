@@ -11,3 +11,6 @@ class Flights(models.Model):
     plan_time = models.CharField(max_length=20)
     fact_time = models.CharField(max_length=20)
     status = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'Аэропорт:{self.orig_airport} {self.flight_type} Направление:{self.dest_airport} Статус:{self.status}'
