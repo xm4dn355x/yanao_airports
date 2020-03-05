@@ -40,9 +40,8 @@ table {
     border-collapse: collapse;
 }
 th{
-
     text-align: left;
-    font-weight: bold;
+    font-weight: normal;
     background-color: #F5F5F5;
 }
 td {
@@ -66,8 +65,16 @@ td {
 .name_flights, tr{
     background-color: #F5F5F5;
 }
-
-.name_flights tr:hover {
+.name_flights td {
+    height: 35px;
+    /*padding-top: 10px;
+    padding-bottom: 10px;*/
+}
+.name_flights:hover {
     background-color: #FFFFFF;
-    color: #EDEEF0;
+    color: #000000;
+}
+.status {
+    color: #e6556b;
+    font-weight: normal;
 }
