@@ -5,6 +5,22 @@
     <title>Test template</title>
 </head>
 <body>
+    {% if flights %}
 
+        {% for flight in flights %}
+        <ul>
+            <li>Аэропорт: {{ flight.orig_airport }} {{ flight.flight_type }}</li>
+            <li>Рейс: {{ flight.flight }}</li>
+            <li>Направление: {{ flight.dest_airport }}</li>
+            <li>Самолет: {{ flight.plane }}</li>
+            <li>Планируемое время: {{ flight.plan_time }}</li>
+            <li>Фактическое время: {{ flight.fact_time }}</li>
+            <li>Статус: {{ flight.status }}</li>
+        </ul>
+        {% endfor %}
+
+    {% else %}
+        <p>No flights are available.</p>
+    {% endif %}
 </body>
 </html>
