@@ -31,22 +31,36 @@ a {
 a:hover {
     color: #FFFFFF;
 }
+
 article {                           /* Таблица отмененных рейсов*/
     padding-top: 20px;
 }
+
 table {
     /*border: 1px solid #6267b5;*/
     width: 70%;                     /* Ширина таблицы */
     border-collapse: collapse;
 }
+
 th{
     text-align: left;
     font-weight: normal;
     background-color: #F5F5F5;
 }
+
 td {
     font-size: 16px;
     font-weight: lighter;
+}
+
+td:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+td:last-child {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .name_table {
@@ -54,8 +68,22 @@ td {
     background-color: #F5F5F5;
 }
 
+.name_table th {
+    padding: 7px;
+}
+
 .cancelled_flights_open{
+    background-color: #e6e6e6;
+    text-align: center;
+}
+
+.cancelled_flights_open:hover {
+    border-radius: 5px;
     background-color: #cdcdcd;
+}
+
+.cancelled_flights_open td {
+    padding: 5px;
 }
 
 .cancelled_flights {
@@ -65,15 +93,18 @@ td {
 .name_flights, tr{
     background-color: #F5F5F5;
 }
+
 .name_flights td {
     height: 35px;
     /*padding-top: 10px;
     padding-bottom: 10px;*/
 }
+
 .name_flights:hover {
     background-color: #FFFFFF;
     color: #000000;
 }
+
 .status {
     color: #e6556b;
     font-weight: normal;
