@@ -67,6 +67,9 @@ td:last-child {
     font-weight: bold;
     background-color: #F5F5F5;
 }
+.name_table:hover {
+    cursor: default;
+}
 
 .name_table th {
     padding: 7px;
@@ -78,6 +81,7 @@ td:last-child {
 }
 
 .cancelled_flights_open:hover {
+    cursor: pointer;
     border-radius: 5px;
     background-color: #cdcdcd;
 }
@@ -101,6 +105,7 @@ td:last-child {
 }
 
 .name_flights:hover {
+    cursor: pointer;
     background-color: #FFFFFF;
     color: #000000;
 }
