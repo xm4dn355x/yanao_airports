@@ -1,26 +1,82 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Test template</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="вылет, прилет, расписание, рейсов, рейсы, аэропорт, ЯНАО, Салехард, Надым, Новый-Уренгой, Ноябырьск, онлайн-табло, табло">
+    <meta name="description" content="Онлайн-табло вылета и прилетов самолетов, и верталётов аэропортов ЯНАО. Информация для пассажиро, расписание на сегодня.">
+    <title>Расписание рейсов</title>
+    <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
-    {% if flights %}
 
-        {% for flight in flights %}
-        <ul>
-            <li>Аэропорт: {{ flight.orig_airport }} {{ flight.flight_type }}</li>
-            <li>Рейс: {{ flight.flight }}</li>
-            <li>Направление: {{ flight.dest_airport }}</li>
-            <li>Самолет: {{ flight.plane }}</li>
-            <li>Планируемое время: {{ flight.plan_time }}</li>
-            <li>Фактическое время: {{ flight.fact_time }}</li>
-            <li>Статус: {{ flight.status }}</li>
-        </ul>
-        {% endfor %}
+    <header>
 
-    {% else %}
-        <p>No flights are available.</p>
-    {% endif %}
+        <nav>
+            <ul>
+                <li><a href="#">Салехард</a></li>
+                <li><a href="#">Надым</a></li>
+                <li><a href="#">Новый Уренгой</a></li>
+                <li><a href="#">Ноябрьск</a></li>
+                <li><a href="#">Сабетта</a></li>
+            </ul>
+        </nav>
+
+    </header>
+
+    <main>
+
+        <article> <! Тут будет таблица с отмененными рейсами>
+            <section>
+                <table class="cancelled_flights">
+                    <tr class="name_table">
+                        <th>Аэропорт</th>
+                        <th>Тип рейса</th>
+                        <th>№ Рейса</th>
+                        <th>Модель самолета</th>
+                        <th>Направление</th>
+                        <th>Время по расписанию</th>
+                        <th>Время фактическое</th>
+                        <th>Статус</th>
+                    </tr>
+                    <tr class="cancelled_flights_open">
+                        <td colspan="9">Скрыть рейсы</td>
+                    </tr>
+                    {% if flights %}
+                        {% for flight in flights %}
+                            <tr class="name_flights">
+                                <td>{{ flight.orig_airport }}</td>
+                                <td>{{ flight.flight_type }}</td>
+                                <td>{{ flight.flight }}</td>
+                                <td>{{ flight.plane }}</td>
+                                <td>{{ flight.dest_airport }}</td>
+                                <td>{{ flight.plan_time }}</td>
+                                <td>{{ flight.fact_time }}</td>
+                                <td class="status">{{ flight.status }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr class="name_flights">
+                            <td colspan="8">Нет задерживающихся рейсов</td>
+                        </tr>
+                    {% endif %}
+
+                </table>
+            </section>
+        </article>
+
+        <article><! Тут будет таблица с действующими рейсами>
+            <section>
+
+            </section>
+        </article>
+
+    </main>
+
+    <footer>
+
+    </footer>
 </body>
 </html>
