@@ -130,3 +130,5 @@ dmypy.json
 .idea
 serialise.py
 serialized.json
+configs.py
+airports_boards/airports_boards/configs.py
