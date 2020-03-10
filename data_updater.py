@@ -18,6 +18,12 @@ FLIGHTS = 'dashboard_flights'
 
 
 def db_update_loop():
+    """
+    Update Loop.
+    runs func update_db() every 5 minutes
+
+    :return: nothing
+    """
     start_time = time()
     print('Парсинг аэропортов ЯНАО.')
     try:
@@ -29,6 +35,11 @@ def db_update_loop():
 
 
 def update_db():
+    """
+    Parse airports sites, insert to DB table new data and delete old data
+
+    :return: nothing
+    """
     print('Updating airports status')
     old_data = select_all_from_talbe(FLIGHTS)
     try:
@@ -70,6 +81,14 @@ def update_db():
 
 
 def prepare_data(airport, flight_type, data):
+    """
+    Prepare data for insert into table
+
+    :param airport: str airport name 'Салехард', 'Ноябрьск', 'Новый Уренгой', 'Надым', 'Сабетта'
+    :param flight_type: str 'ПРИЛЕТ', 'ВЫЛЕТ'
+    :param data: dict with parsed data
+    :return: dict with insert statement
+    """
     res = {
         'orig_airport': airport,
         'flight_type': flight_type,
@@ -84,6 +103,13 @@ def prepare_data(airport, flight_type, data):
 
 
 def delete_from_table(table_name, data):
+    """
+    Delete row from table
+
+    :param table_name: str
+    :param data: dict row data
+    :return: nothing
+    """
     conn = psycopg2.connect(dbname=PG_CONF['NAME'], user=PG_CONF['USER'], password=PG_CONF['PWD'], host=PG_CONF['HOST'])
     cursor = conn.cursor(cursor_factory=DictCursor)
     for d in data:
@@ -94,6 +120,13 @@ def delete_from_table(table_name, data):
 
 
 def insert_to_table(table_name, data):
+    """
+    Insert data into table
+
+    :param table_name: str
+    :param data: dict with insert statement
+    :return:
+    """
     conn = psycopg2.connect(dbname=PG_CONF['NAME'], user=PG_CONF['USER'], password=PG_CONF['PWD'], host=PG_CONF['HOST'])
     cursor = conn.cursor(cursor_factory=DictCursor)
     columns = data.keys()
@@ -105,7 +138,12 @@ def insert_to_table(table_name, data):
 
 
 def select_all_from_talbe(table_name):
-    print('select_all_from_table')
+    """
+    Select all data from table
+
+    :param table_name: srt
+    :return: list of dicts with table data
+    """
     conn = psycopg2.connect(dbname=PG_CONF['NAME'], user=PG_CONF['USER'], password=PG_CONF['PWD'], host=PG_CONF['HOST'])
     cursor = conn.cursor(cursor_factory=DictCursor)
     cursor.execute(f'SELECT * FROM {table_name}')
