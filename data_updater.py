@@ -5,11 +5,17 @@ created by https://github.com/xm4dn355x
 """
 
 
+import psycopg2
 from airports_parser import parse_all
-from configs import POSTGRES_CONF
+from configs import PG_CONF
+from psycopg2.extras import DictCursor
 
 def update_db():
     print('update_db')
+    old_data = select_all_from_talbe('dashboard_flights')
+    print('old data')
+    for data in old_data:
+        print(data)
     data = parse_all()
     print('SLY')
     print('arrivals')
@@ -67,6 +73,12 @@ def insert_to_table(table_name, data):
 
 def select_all_from_talbe(table_name):
     print('select_all_from_table')
+    conn = psycopg2.connect(dbname=PG_CONF['NAME'], user=PG_CONF['USER'], password=PG_CONF['PWD'], host=PG_CONF['HOST'])
+    cursor = conn.cursor(cursor_factory=DictCursor)
+    cursor.execute(f'SELECT * FROM {table_name}')
+    res = cursor.fetchall()
+    conn.close()
+    return res
 
 
 if __name__ == '__main__':
