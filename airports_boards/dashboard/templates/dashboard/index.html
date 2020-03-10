@@ -13,9 +13,9 @@
 <body>
 
     <header>
-
         <nav>
             <ul>
+                <li><a href="/dashboard/">Задерживаемые/Отмененные рейсы</a></li>
                 <li><a href="/dashboard/sly/">Салехард</a></li>
                 <li><a href="/dashboard/nym/">Надым</a></li>
                 <li><a href="/dashboard/nux/">Новый Уренгой</a></li>
@@ -23,11 +23,9 @@
                 <li><a href="/dashboard/sbt/">Сабетта</a></li>
             </ul>
         </nav>
-
     </header>
 
     <main>
-
         <article> <! Тут будет таблица с отмененными рейсами>
             <section>
                 <table class="cancelled_flights">
@@ -35,14 +33,11 @@
                         <th>Аэропорт</th>
                         <th>Тип рейса</th>
                         <th>№ Рейса</th>
-                        <th>Модель самолета</th>
+                        <th>Самолет/авиакомпания</th>
                         <th>Направление</th>
                         <th>Время по расписанию</th>
                         <th>Время фактическое</th>
                         <th>Статус</th>
-                    </tr>
-                    <tr class="cancelled_flights_open">
-                        <td colspan="9">Скрыть рейсы</td>
                     </tr>
                     {% if flights %}
                         {% for flight in flights %}
@@ -62,17 +57,9 @@
                             <td colspan="9">Нет задерживающихся рейсов</td>
                         </tr>
                     {% endif %}
-
                 </table>
             </section>
         </article>
-
-        <article><! Тут будет таблица с действующими рейсами>
-            <section>
-
-            </section>
-        </article>
-
     </main>
 
     <footer>
