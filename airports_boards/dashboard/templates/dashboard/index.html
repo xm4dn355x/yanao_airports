@@ -26,7 +26,7 @@
     </header>
 
     <main>
-        <article> <! Тут будет таблица с отмененными рейсами>
+        <article>
             <section>
                 <table class="cancelled_flights">
                     <tr class="name_table">
@@ -39,8 +39,11 @@
                         <th>Время фактическое</th>
                         <th>Статус</th>
                     </tr>
-                    {% if flights %}
-                        {% for flight in flights %}
+                    {% if problems %}
+                        <tr class="cancelled_flights_open">
+                            <td colspan="8">ОТМЕНЕННЫЕ и ЗАДЕРЖИВАЕМЫЕ:</td>
+                        </tr>
+                        {% for flight in problems %}
                             <tr class="name_flights">
                                 <td>{{ flight.orig_airport }}</td>
                                 <td>{{ flight.flight_type }}</td>
@@ -54,8 +57,42 @@
                         {% endfor %}
                     {% else %}
                         <tr class="name_flights">
-                            <td colspan="9">Нет задерживающихся рейсов</td>
+                            <td colspan="8">НЕТ ОТМЕНЕННЫХ и ЗАДЕРЖИВАЕМЫХ рейсов</td>
                         </tr>
+                    {% endif %}
+                    {% if arrivals %}
+                        <tr class="cancelled_flights_open">
+                            <td colspan="8">ПРИЛЕТ:</td>
+                        </tr>
+                        {% for flight in arrivals %}
+                            <tr class="name_flights">
+                                <td>{{ flight.orig_airport }}</td>
+                                <td>{{ flight.flight_type }}</td>
+                                <td>{{ flight.flight }}</td>
+                                <td>{{ flight.plane }}</td>
+                                <td>{{ flight.dest_airport }}</td>
+                                <td>{{ flight.plan_time }}</td>
+                                <td>{{ flight.fact_time }}</td>
+                                <td>{{ flight.status }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    {% if departures %}
+                        <tr class="cancelled_flights_open">
+                            <td colspan="8">ВЫЛЕТ:</td>
+                        </tr>
+                        {% for flight in departures %}
+                            <tr class="name_flights">
+                                <td>{{ flight.orig_airport }}</td>
+                                <td>{{ flight.flight_type }}</td>
+                                <td>{{ flight.flight }}</td>
+                                <td>{{ flight.plane }}</td>
+                                <td>{{ flight.dest_airport }}</td>
+                                <td>{{ flight.plan_time }}</td>
+                                <td>{{ flight.fact_time }}</td>
+                                <td>{{ flight.status }}</td>
+                            </tr>
+                        {% endfor %}
                     {% endif %}
                 </table>
             </section>

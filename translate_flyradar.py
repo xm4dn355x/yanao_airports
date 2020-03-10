@@ -26,4 +26,6 @@ def translate(str, type):
             res = str.replace('Estimated', 'ОЖИДАЕТСЯ')
         if re.findall('Canceled', str):
             res = str.replace('Canceled', 'ОТМЕНЕН')
+        if re.findall('Unknown', str):
+            res = srt.replace('Unknown', 'НЕИЗВЕСТЕН')
     return res
