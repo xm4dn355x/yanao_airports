@@ -13,7 +13,7 @@ from .models import Flights
 # Create your views here.
 def index(request):
     problem_flights = Flights.objects.filter(Q(status='ОТМЕНЕН') | Q(status='ЗАДЕРЖАН') | Q(status='НЕИЗВЕСТЕН'))\
-        .order_by('orig_airport', 'flight_type')
+        .order_by('orig_airport', 'flight_type', 'plan_time')
     template = loader.get_template('dashboard/index.html')
     context = {
         'problems': problem_flights,
@@ -25,7 +25,7 @@ def show_sly(request):
     airport = 'Салехард'
     flights = Flights.objects.filter(orig_airport=airport)
     problem_flights = Flights.objects.filter(orig_airport=airport)\
-        .filter(Q(status='ОТМЕНЕН') | Q(status='ЗАДЕРЖАН')).order_by('orig_airport', 'flight_type')
+        .filter(Q(status='ОТМЕНЕН') | Q(status='ЗАДЕРЖАН')).order_by('orig_airport', 'flight_type', 'plan_time')
     arrivals = flights.filter(flight_type='ПРИЛЕТ').exclude(status='ОТМЕНЕН').exclude(status='ЗАДЕРЖАН')
     departures = flights.filter(flight_type='ВЫЛЕТ').exclude(status='ОТМЕНЕН').exclude(status='ЗАДЕРЖАН')
     template = loader.get_template('dashboard/index.html')
@@ -41,7 +41,7 @@ def show_noj(request):
     airport = 'Ноябрьск'
     flights = Flights.objects.filter(orig_airport=airport)
     problem_flights = Flights.objects.filter(orig_airport=airport) \
-        .filter(Q(status='ОТМЕНЕН') | Q(status='ЗАДЕРЖАН')).order_by('orig_airport', 'flight_type')
+        .filter(Q(status='ОТМЕНЕН') | Q(status='ЗАДЕРЖАН')).order_by('orig_airport', 'flight_type', 'plan_time')
     arrivals = flights.filter(flight_type='ПРИЛЕТ').exclude(status='ОТМЕНЕН').exclude(status='ЗАДЕРЖАН')
     departures = flights.filter(flight_type='ВЫЛЕТ').exclude(status='ОТМЕНЕН').exclude(status='ЗАДЕРЖАН')
     template = loader.get_template('dashboard/index.html')
@@ -57,7 +57,7 @@ def show_nux(request):
     airport = 'Новый Уренгой'
     flights = Flights.objects.filter(orig_airport=airport)
     problem_flights = Flights.objects.filter(orig_airport=airport) \
-        .filter(Q(status='ОТМЕНЕН') | Q(status='ЗАДЕРЖАН')).order_by('orig_airport', 'flight_type')
+        .filter(Q(status='ОТМЕНЕН') | Q(status='ЗАДЕРЖАН')).order_by('orig_airport', 'flight_type', 'plan_time')
     arrivals = flights.filter(flight_type='ПРИЛЕТ').exclude(status='ОТМЕНЕН').exclude(status='ЗАДЕРЖАН')
     departures = flights.filter(flight_type='ВЫЛЕТ').exclude(status='ОТМЕНЕН').exclude(status='ЗАДЕРЖАН')
     template = loader.get_template('dashboard/index.html')
@@ -73,7 +73,7 @@ def show_nym(request):
     airport = 'Надым'
     flights = Flights.objects.filter(orig_airport=airport)
     problem_flights = Flights.objects.filter(orig_airport=airport) \
-        .filter(Q(status='ОТМЕНЕН') | Q(status='ЗАДЕРЖАН')).order_by('orig_airport', 'flight_type')
+        .filter(Q(status='ОТМЕНЕН') | Q(status='ЗАДЕРЖАН')).order_by('orig_airport', 'flight_type', 'plan_time')
     arrivals = flights.filter(flight_type='ПРИЛЕТ').exclude(status='ОТМЕНЕН').exclude(status='ЗАДЕРЖАН')
     departures = flights.filter(flight_type='ВЫЛЕТ').exclude(status='ОТМЕНЕН').exclude(status='ЗАДЕРЖАН')
     template = loader.get_template('dashboard/index.html')
@@ -89,7 +89,7 @@ def show_sbt(request):
     airport = 'Сабетта'
     flights = Flights.objects.filter(orig_airport=airport)
     problem_flights = Flights.objects.filter(orig_airport=airport) \
-        .filter(Q(status='ОТМЕНЕН') | Q(status='ЗАДЕРЖАН')).order_by('orig_airport', 'flight_type')
+        .filter(Q(status='ОТМЕНЕН') | Q(status='ЗАДЕРЖАН')).order_by('orig_airport', 'flight_type', 'plan_time')
     arrivals = flights.filter(flight_type='ПРИЛЕТ').exclude(status='ОТМЕНЕН').exclude(status='ЗАДЕРЖАН')
     departures = flights.filter(flight_type='ВЫЛЕТ').exclude(status='ОТМЕНЕН').exclude(status='ЗАДЕРЖАН')
     template = loader.get_template('dashboard/index.html')
