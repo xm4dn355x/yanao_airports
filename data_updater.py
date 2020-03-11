@@ -26,10 +26,10 @@ def db_update_loop():
     """
     start_time = time()
     print('Парсинг аэропортов ЯНАО.')
-    try:
-        update_db()
-    except :
-        print('Ошибка во время выполнения парсинга')
+    #try:
+    update_db()
+    #except :
+    #    print('Ошибка во время выполнения парсинга')
     print(f"""Время выполнения: {round((time() - start_time), 2) }""")
     threading.Timer(300, db_update_loop).start()
 

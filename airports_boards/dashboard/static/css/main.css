@@ -1,14 +1,20 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap&subset=cyrillic');
+
 body {
     background-color: #F5F5F5;
     font-family: 'Roboto', sans-serif;
     /*font-family: 'Roboto', sans-serif;*/
     margin: 0;
+    padding: 0;
+}
+
+main {
 }
 header {
     padding: 2px;
     background-color: #6267b5;
 }
+
 ul {
     list-style-type: none;
     text-align: center;
@@ -16,7 +22,7 @@ ul {
 
 li {
     display: inline;
-    margin-right: 20px;
+    margin-right: 60px;
 }
 
 a {
@@ -33,11 +39,13 @@ a:hover {
 
 article {                           /* Таблица отмененных рейсов*/
     padding-top: 20px;
+
 }
 
 table {
     /*border: 1px solid #6267b5;*/
-    width: 70%;                     /* Ширина таблицы */
+    width: 85%;                    /* Ширина таблицы */
+    /*width: 1200px; */
     border-collapse: collapse;
 }
 
@@ -48,7 +56,7 @@ th{
 }
 
 td {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: lighter;
 }
 
@@ -63,6 +71,7 @@ td:last-child {
 }
 
 .name_table {
+    font-size: 14px;
     font-weight: bold;
     background-color: #F5F5F5;
 }
@@ -74,42 +83,61 @@ td:last-child {
     padding: 7px;
 }
 
-.cancelled_flights_open{
+.button_open_close{
     background-color: #e6e6e6;
     text-align: center;
 }
 
-.cancelled_flights_open:hover {
+.button_open_close:hover {
     cursor: pointer;
     border-radius: 5px;
     background-color: #cdcdcd;
+
 }
 
-.cancelled_flights_open td {
+.button_open_close td {
     padding: 5px;
 }
 
 .cancelled_flights {
     margin: auto;
+
 }
 
+.name_flights {
+    border: 1px solid transparent;
+}
 .name_flights, tr{
     background-color: #F5F5F5;
+    color: #000000;
+
 }
 
 .name_flights td {
     height: 35px;
     /*padding-top: 10px;
     padding-bottom: 10px;*/
+
 }
 
 .name_flights:hover {
     cursor: pointer;
     background-color: #FFFFFF;
-    color: #000000;
-}
+    /*font-weight: bold;
+    /*-webkit-transform: scale(1.025); /*увеличение ячейки*/
+    /*-ms-transform: scale(1.025);*/
+    /*transform: scale(1.025);*/
+    text-shadow: 0 0 .65px #0f0f0f, 0 0 .65px #0f0f0f;
+    }
 
 .status {
     color: #e6556b;
     font-weight: normal;
+}
+/* Подвал сайта */
+footer {
+    margin-top: 25px;
+    width: 100%;
+    height: 60px;
+    background-color: #0f0f0f;
 }

@@ -1,5 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="ru">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,7 +15,7 @@
     <header>
         <nav>
             <ul>
-                <li><a href="/dashboard/">Задерживаемые/Отмененные рейсы</a></li>
+                <li><a href="/dashboard/"> Задержаные | Отмененные рейсы</a></li>
                 <li><a href="/dashboard/sly/">Салехард</a></li>
                 <li><a href="/dashboard/nym/">Надым</a></li>
                 <li><a href="/dashboard/nux/">Новый Уренгой</a></li>
@@ -33,15 +33,16 @@
                         <th>Аэропорт</th>
                         <th>Тип рейса</th>
                         <th>№ Рейса</th>
-                        <th>Самолет/авиакомпания</th>
+                        <!-- <th>Самолет</th> -->
+                        <th>Авиакомпания</th>
                         <th>Направление</th>
                         <th>Время по расписанию</th>
                         <th>Время фактическое</th>
                         <th>Статус</th>
                     </tr>
                     {% if problems %}
-                        <tr class="cancelled_flights_open">
-                            <td colspan="8">ОТМЕНЕННЫЕ и ЗАДЕРЖИВАЕМЫЕ:</td>
+                        <tr class="button_open_close">
+                            <td colspan="8">Задержаные | Отмененные рейсы:</td>
                         </tr>
                         {% for flight in problems %}
                             <tr class="name_flights">
@@ -61,7 +62,7 @@
                         </tr>
                     {% endif %}
                     {% if arrivals %}
-                        <tr class="cancelled_flights_open">
+                        <tr class="button_open_close">
                             <td colspan="8">ПРИЛЕТ:</td>
                         </tr>
                         {% for flight in arrivals %}
@@ -78,7 +79,7 @@
                         {% endfor %}
                     {% endif %}
                     {% if departures %}
-                        <tr class="cancelled_flights_open">
+                        <tr class="button_open_close">
                             <td colspan="8">ВЫЛЕТ:</td>
                         </tr>
                         {% for flight in departures %}
@@ -99,8 +100,9 @@
         </article>
     </main>
 
-    <footer>
 
-    </footer>
 </body>
+<footer>
+
+</footer>
 </html>
