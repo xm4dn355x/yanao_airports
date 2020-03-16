@@ -128,5 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .idea
-configs.py
+parser/configs.py
 airports_boards/airports_boards/configs.py
