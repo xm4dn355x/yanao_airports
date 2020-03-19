@@ -83,10 +83,12 @@ def get_sly_parsed_data(raw_data, type):
     :return: list of dicts with parsed data
     """
     rows = raw_data.get(type)
+    day = strftime("%d.%m ", gmtime(time()))
     data = []
     for row in rows:
         row_data = {'flight': row['flight'], 'airport': row['airport'].strip(), 'plane': row['aircraft'].strip(),
-                    'plan_time': row['plan'], 'fact_time': row['fact'], 'status': row['status'].upper()}
+                    'plan_time': f"{day} {row['plan']}", 'fact_time': f"{day} {row['fact']}",
+                    'status': row['status'].upper()}
         data.append(row_data)
     return data
 
@@ -138,10 +140,10 @@ def nux_get_data(html):
                 .text
         except :
             plane = ''
-        plan_time = f"{row.find('div', 'table-flex__td table-flex__td--type1').find('span', 'board__text').text} " \
-                    f"{row.find('div', 'table-flex__td table-flex__td--type1').find('span', 'board__text-extra').text.strip()}"
-        fact_time = f"{row.find('div', 'table-flex__td table-flex__td--type6').find('span', 'board__text').text} " \
-                    f"{row.find('div', 'table-flex__td table-flex__td--type6').find('span', 'board__text-extra').text.strip()}"
+        plan_time = f"{row.find('div', 'table-flex__td table-flex__td--type1').find('span', 'board__text-extra').text.strip()} " \
+                    f"{row.find('div', 'table-flex__td table-flex__td--type1').find('span', 'board__text').text}"
+        fact_time = f"{row.find('div', 'table-flex__td table-flex__td--type6').find('span', 'board__text-extra').text.strip()} " \
+                    f"{row.find('div', 'table-flex__td table-flex__td--type6').find('span', 'board__text').text}"
         status = row.find('div', 'table-flex__td table-flex__td--type5').find('span').text.upper()
         row_data = {'flight': flight, 'airport': airport, 'plane': plane, 'plan_time': plan_time,
                     'fact_time': fact_time, 'status': status}
@@ -247,7 +249,7 @@ def convert_timestamp_to_strftime(time_var):
     :param time_var: int timestamp
     :return: str "Hours:Minutes day.month"
     """
-    return strftime("%H:%M %d.%m", gmtime(time_var))
+    return strftime("%d.%m %H:%M", gmtime(time_var))
 
 
 if __name__ == '__main__':
