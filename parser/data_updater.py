@@ -19,17 +19,13 @@ FLIGHTS = 'dashboard_flights'
 
 def db_update_loop():
     """
-    Update Loop.
-    runs func update_db() every 5 minutes
+    Update Loop. runs func update_db() every 5 minutes
 
     :return: nothing
     """
     start_time = time()
     print('Парсинг аэропортов ЯНАО.')
-    #try:
     update_db()
-    #except :
-    #    print('Ошибка во время выполнения парсинга')
     print(f"""Время выполнения: {round((time() - start_time), 2) }""")
     threading.Timer(300, db_update_loop).start()
 
