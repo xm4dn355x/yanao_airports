@@ -1,5 +1,6 @@
 venv
 .idea
 airports_boards/dashboard/001_initial.py
+airports_boards/db.sqlite3
 parser/configs.py
 airports_boards/airports_boards/configs.py
